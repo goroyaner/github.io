@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>goroyaner.de</title>
+
+<style>
+
+:root{
+--werder:#0b7a3b;
+--dark:#0f1117;
+--card:#171a22;
+}
+
+body{
+margin:0;
+font-family:Segoe UI,Arial;
+background:var(--dark);
+color:white;
+}
+
+header{
+background:var(--werder);
+padding:35px;
+text-align:center;
+}
+
+header h1{
+margin:0;
+letter-spacing:4px;
+}
+
+nav{
+background:#0a5f2d;
+padding:10px;
+text-align:center;
+}
+
+nav a{
+color:white;
+margin:0 15px;
+text-decoration:none;
+font-weight:bold;
+}
+
+section{
+max-width:1200px;
+margin:auto;
+padding:40px 20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:25px;
+}
+
+.card{
+background:var(--card);
+padding:20px;
+border-radius:12px;
+box-shadow:0 5px 15px rgba(0,0,0,0.4);
+}
+
+h2{
+color:#27d17c;
+margin-top:0;
+}
+
+iframe{
+width:100%;
+height:420px;
+border:none;
+border-radius:8px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+padding:10px;
+border-bottom:1px solid #333;
+text-align:left;
+}
+
+th{
+color:#27d17c;
+}
+
+footer{
+text-align:center;
+padding:40px;
+color:#888;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>GOROYANER.DE</h1>
+<p>Bremen · Wetter · Fußball</p>
+</header>
+
+<nav>
+<a href="#wetter">Wetter</a>
+<a href="#werder">Werder Bremen</a>
+<a href="#bundesliga">Bundesliga</a>
+<a href="#sgbo">SG Bremen-Ost</a>
+</nav>
+
+<section id="wetter">
+
+<h2>🌦 Wetter Bremen-Arbergen</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Aktuelles Wetter</h3>
+
+<div id="weather">
+Lade Wetterdaten...
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>🌧 Regenradar</h3>
+
+<iframe src="https://www.rainviewer.com/map.html?loc=53.05,8.93,7&oFa=1&oC=1&oU=1&oCS=1&oF=1&oAP=1&c=1&o=83"></iframe>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="werder">
+
+<h2>⚽ Werder Bremen – letzte Spiele</h2>
+
+<div class="card">
+
+<table>
+
+<tr>
+<th>Datum</th>
+<th>Spiel</th>
+<th>Ergebnis</th>
+</tr>
+
+<tr>
+<td>01.03</td>
+<td>Bremen vs Frankfurt</td>
+<td>3 : 1</td>
+</tr>
+
+<tr>
+<td>23.02</td>
+<td>Freiburg vs Bremen</td>
+<td>1 : 1</td>
+</tr>
+
+<tr>
+<td>16.02</td>
+<td>Bremen vs Gladbach</td>
+<td>1 : 0</td>
+</tr>
+
+<tr>
+<td>09.02</td>
+<td>Dortmund vs Bremen</td>
+<td>3 : 0</td>
+</tr>
+
+</table>
+
+</div>
+
+</section>
+
+
+<section id="bundesliga">
+
+<h2>📊 Bundesliga Tabelle</h2>
+
+<div class="card">
+
+<iframe src="https://www.kicker.de/bundesliga/tabelle"></iframe>
+
+</div>
+
+</section>
+
+
+<section id="sgbo">
+
+<h2>⚽ SG Bremen-Ost – 1. Herren</h2>
+
+<div class="card">
+
+<table>
+
+<tr>
+<th>Spiel</th>
+<th>Ergebnis</th>
+</tr>
+
+<tr>
+<td>SG Bremen-Ost vs ATS Buntentor</td>
+<td>2 : 1</td>
+</tr>
+
+<tr>
+<td>OSC Bremerhaven vs SG Bremen-Ost</td>
+<td>1 : 1</td>
+</tr>
+
+<tr>
+<td>SG Bremen-Ost vs BTS Neustadt</td>
+<td>0 : 3</td>
+</tr>
+
+</table>
+
+</div>
+
+</section>
+
+
+<footer>
+© 2026 goroyaner.de
+</footer>
+
+
+<script>
+
+async function loadWeather(){
+
+let url="https://api.open-meteo.com/v1/forecast?latitude=53.05&longitude=8.93&current_weather=true";
+
+let r=await fetch(url);
+let data=await r.json();
+
+let w=data.current_weather;
+
+document.getElementById("weather").innerHTML=
+`
+Temperatur: ${w.temperature}°C<br>
+Wind: ${w.windspeed} km/h<br>
+Zeit: ${w.time}
+`;
+
+}
+
+loadWeather();
+
+</script>
+
+</body>
+</html>
